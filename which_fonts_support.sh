@@ -38,5 +38,5 @@ IFS=$'\n' read -r -d '' -a FONTS <<< `fc-list -v | grep -P "${BASE}:|family:" | 
 echo "Font list support char [ ${CHAR} ](${ORD}): "
 
 for FONT in "${FONTS[@]}"; do
-    python3 -c "import sys, re;f,c=sys.argv[1:];s=f[f.rfind(':') + 2:];r=[int(x, 16) for x in s.split(' ')][(ord(c)&0xff)//32]&(1<<(ord(c)&0xff%32));print(''.join(map(lambda x: x.ljust(30), re.findall(r'\"(.*?)\"', f))) + '\n' if r != 0 else '', end='')" "${FONT}" "${CHAR}"
+    python3 -c "import sys,re;f,c=sys.argv[1:];s=f[f.rfind(':')+2:];r=[int(x,16) for x in s.split(' ')][(ord(c)&0xff)//32]&(1<<(ord(c)&0xff%32));print(''.join(map(lambda x:x.ljust(30),re.findall(r'\"(.*?)\"',f)))+'\n' if r != 0 else '',end='')" "${FONT}" "${CHAR}"
 done
