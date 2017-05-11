@@ -40,7 +40,7 @@ So I write this to help me find avaliable fallback font in my system.
 ./which_fonts_support.sh <the-char>
 ```
 
-### Dependience
+### Dependencies
 
 * fontconfig
 * python3
