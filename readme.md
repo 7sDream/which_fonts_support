@@ -1,6 +1,6 @@
 # Which fonts support
 
-[English Readme](#intro)
+[English Readme](#introduction)
 
 ## 介绍
 
