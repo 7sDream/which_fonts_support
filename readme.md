@@ -62,5 +62,5 @@ You can use `sort` command and `uniq` command to sort and union different weight
 
 MIT.
 
-[screen-shot-normal]: http://rikka-10066868.image.myqcloud.com/1e83922a-4240-4700-8a69-aab4f88be283.png
-[screen-shot-sort-uniq]: http://rikka-10066868.image.myqcloud.com/a211d41b-2aaa-4c74-8bc6-08d7a1aa10f5.png
+[screen-shot-normal]: http://rikka-10066868.image.myqcloud.com/5da3375e-953c-4f63-9afb-ab42177b0fae.png
+[screen-shot-sort-uniq]: http://rikka-10066868.image.myqcloud.com/d1738c23-97a8-4167-8daf-7b48a7baecbd.png
