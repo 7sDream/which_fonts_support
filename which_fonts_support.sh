@@ -33,7 +33,7 @@ ORD=`python3 -c "print(hex(ord('${CHAR}'))[2:].rjust(6, '0'))"`
 
 BASE=${ORD:0:4}
 
-IFS=$'\n' read -r -d '' -a FONTS <<< `fc-list -v | grep -P "${BASE}:|family:" | sed -n -r "N; s/\n//; s/\t*(family[^\t]*?)\t*(${BASE}: .*)/\1 \2/; /family.*${BASE}/p; d;"`
+IFS=$'\n' read -r -d '' -a FONTS <<< `fc-list -v | grep -P "${BASE}:|family:" | grep -B 1 --no-group-separator "${BASE}" | sed -n -r "N; s/\t//g; s/\n/ /; p; d;"`
 
 echo "Font list support char [ ${CHAR} ](${ORD}): "
 
