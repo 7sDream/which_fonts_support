@@ -56,4 +56,4 @@ which_fonts_support <the-char>
 
 MIT.
 
-[screen-shot-normal]: https://i.loli.net/2018/10/31/5bd9c90ab5333.jpg
+[screen-shot-normal]: https://i.loli.net/2018/11/01/5bda081e2b840.jpg
