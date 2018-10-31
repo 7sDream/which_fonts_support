@@ -15,7 +15,8 @@
 ### 使用方法：
 
 ```bash
-./which_fonts_support.py <单个字符>
+pip3 install which-fonts-support
+which_fonts_support <单个字符>
 ```
 
 ### 依赖：
@@ -37,7 +38,8 @@ So I write this to help me find available fallback font in my system.
 ### Usage
 
 ```bash
-./which_fonts_support.py <the-char>
+pip3 install which-fonts-support
+which_fonts_support <the-char>
 ```
 
 ### Dependencies
