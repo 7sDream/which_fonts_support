@@ -22,7 +22,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import sys, re, subprocess
+import sys, re, subprocess, binascii, collections
 
 char = ''
 if len(sys.argv) > 1:
@@ -45,6 +45,7 @@ codepoint_tail = codepoint & 0x0000FF
 codepoint_str = hex(codepoint)[2:].rjust(6, '0')
 codepoint_base_str = hex(codepoint_base)[2:].rjust(4, '0')
 codepoint_tail_str = hex(codepoint_tail)[2:].rjust(2, '0')
+codepoint_utf8_escape = binascii.hexlify(char.encode('utf8')).decode("ascii")
 
 # fc-list format is each line 8 block, 3 bit, so rshift 5 bit to get the index
 block_index = codepoint_tail >> 5
@@ -60,9 +61,10 @@ if result.returncode != 0:
 
 descriptions = result.stdout.decode('utf-8').split('\n')
 
+print(f'Font(s) support the char [ {char} ]({codepoint}, U+{codepoint_str}, {codepoint_utf8_escape}):')
 
-fonts = set()
-last_font = ""
+fonts = collections.defaultdict(int)
+last_font = ''
 for line in descriptions:
     if 'family:' in line:
         last_font = line
@@ -73,9 +75,10 @@ for line in descriptions:
         supported = number & pos_mask
 
         if supported:
-            font_name = re.search(r'\"([^"]+)\"', last_font).group(1)
-            if font_name not in fonts:
-                fonts.add(font_name)
+            font_name = re.search(r'"([^"]+)"', last_font).group(1)
+            fonts[font_name] += 1
 
-for font in sorted(list(fonts)):
-    print(font)
+max_width = max(map(len, fonts.keys()))
+
+for font, times in sorted(fonts.items(), key=lambda x: x[0]):
+    print(font.ljust(max_width), f" {times} style")
