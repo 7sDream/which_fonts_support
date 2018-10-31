@@ -52,4 +52,4 @@ So I write this to help me find avaliable fallback font in my system.
 
 MIT.
 
-[screen-shot-normal]: https://i.loli.net/2018/10/31/5bd9a67bb979c.jpg
+[screen-shot-normal]: https://i.loli.net/2018/10/31/5bd9c90ab5333.jpg
