@@ -52,6 +52,13 @@ which_fonts_support <the-char>
 
 ![][screen-shot-normal]
 
+## TODO
+
+- [ ] generate HTML page for preview fonts
+- [ ] Documents
+- [ ] Add words on pypi page
+- [ ] Article about how to read the charset section of `fc-list` command
+
 ## LICENSE
 
 MIT.
