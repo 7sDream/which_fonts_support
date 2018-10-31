@@ -21,15 +21,16 @@
 ### 依赖：
 
 * fontconfig
-* python3
+* python >= 3.5
+* wcwidth
 
 ## Introduction
 
-A small scirpt to find which fonts support specified character.
+A small script to find which fonts support specified character.
 
 Recently, I'm working on a LaTeX project, and need to deal with special characters(use another fallback font to show it) frequently.
 
-So I write this to help me find avaliable fallback font in my system.
+So I write this to help me find available fallback font in my system.
 
 (There should be no other people have this demand, I think...
 
@@ -42,7 +43,8 @@ So I write this to help me find avaliable fallback font in my system.
 ### Dependencies
 
 * fontconfig
-* python3
+* python >= 3.5
+* wcwidth
 
 ## 截图 / Screenshot
 

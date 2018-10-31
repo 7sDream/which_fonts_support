@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+# coding=utf-8
+
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
+
+import which_fonts_support
+
+setup(
+    name='which_fonts_support',
+    keywords=['font', 'utilities'],
+    version=which_fonts_support.__version__,
+    py_modules=['which_fonts_support'],
+    url='https://github.com/7sDream/which_fonts_support',
+    license='MIT',
+    author='7sDream',
+    author_email='7seconddream@gmail.com',
+    description='Find which fonts support specified character',
+    install_requires=[
+        'wcwidth'
+    ],
+    entry_points={
+        'console_scripts': ['which_fonts_support=which_fonts_support:__main']
+    },
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'Intended Audience :: End Users/Desktop',
+        'License :: OSI Approved :: MIT License',
+        'Natural Language :: English',
+        'Operating System :: Unix',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3 :: Only'
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Topic :: Text Processing :: Fonts',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Utilities',
+    ]
+)

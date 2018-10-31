@@ -22,63 +22,112 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import sys, re, subprocess, binascii, collections
+import sys, re, subprocess, binascii, collections, argparse
 
-char = ''
-if len(sys.argv) > 1:
-    char = sys.argv[1]
-if len(char) == 0:
-    char = input('Input only one char: ')
-if len(char) != 1:
-    if char == '-h' or char == '--help':
-        print(f'Usage: {sys.argv[0]} char')
-        exit(0)
-    if len(char) == 0:
-        sys.stderr.write('Please input one char\n')
-    elif len(char) > 1:
-        sys.stderr.write('Please only input one char\n')
-    exit(1)
+import wcwidth
 
-codepoint = ord(char) # 2A20
-codepoint_base = (codepoint & 0xFFFF00) >> 8
-codepoint_tail = codepoint & 0x0000FF
-codepoint_str = hex(codepoint)[2:].rjust(6, '0')
-codepoint_base_str = hex(codepoint_base)[2:].rjust(4, '0')
-codepoint_tail_str = hex(codepoint_tail)[2:].rjust(2, '0')
-codepoint_utf8_escape = binascii.hexlify(char.encode('utf8')).decode("ascii")
+__version__ = 'v1.0.0'
 
-# fc-list format is each line 8 block, 3 bit, so rshift 5 bit to get the index
-block_index = codepoint_tail >> 5
-# get last five bit because each block has 32 char
-pos_in_block = codepoint_tail & 0b11111
-# start from left, so lshift to the pos
-pos_mask = 1 << (32 - pos_in_block - 1)
+__all__ = ['available_font_for_codepoint']
 
-result = subprocess.run(['fc-list', '-v'], stdout=subprocess.PIPE)
-if result.returncode != 0:
-    sys.stderr.write('run fc-list -v failed, please check your environment\n')
-    exit(2)
+def __parser_arg():
+    parser = argparse.ArgumentParser(
+        description='Find which fonts support specified character',
+        epilog='Author: 7sDream <7seconddream@gmail.com>\n' +
+        'Github: https://github.com/7sDream/which_fonts_support\n',
+    )
+    parser.add_argument('char', default='')
+    parser.add_argument('--version', action='version', version=__version__)
+    parser.add_argument(
+        '-p', '--preview', action='store_true',
+        help='show font preview for the char in browser',
+    )
 
-descriptions = result.stdout.decode('utf-8').split('\n')
+    return parser.parse_args()
 
-print(f'Font(s) support the char [ {char} ]({codepoint}, U+{codepoint_str}, {codepoint_utf8_escape}):')
+def __get_char_codepoint(char):
+    assert len(char) == 1
 
-fonts = collections.defaultdict(int)
-last_font = ''
-for line in descriptions:
-    if 'family:' in line:
-        last_font = line
-    elif (codepoint_base_str + ':') in line:
-        charset = line[line.rfind(':')+2:]
-        blocks = [int(x,16) for x in charset.split(' ')]
-        number = blocks[block_index]
-        supported = number & pos_mask
+    codepoint = ord(char)
 
-        if supported:
-            font_name = re.search(r'"([^"]+)"', last_font).group(1)
-            fonts[font_name] += 1
+    return {
+        'decimal': codepoint, 
+        'hex': hex(codepoint)[2:].rjust(6, '0'), 
+        'utf8': binascii.hexlify(char.encode('utf8')).decode("ascii"),
+    }
 
-max_width = max(map(len, fonts.keys()))
+def available_font_for_codepoint(codepoint):
+    assert 0 < codepoint < 0x10FFFF
 
-for font, times in sorted(fonts.items(), key=lambda x: x[0]):
-    print(font.ljust(max_width), f" {times} style")
+    codepoint_base = codepoint >> 8
+    codepoint_tail = codepoint & 0xFF
+    codepoint_base_str = hex(codepoint_base)[2:].rjust(4, '0')
+
+    # fc-list format is each line 8 block, 3 bit, so rshift 5 bit to get the index
+    block_index = codepoint_tail >> 5
+    # get last five bit because each block has 32 char
+    pos_in_block = codepoint_tail & 0b11111
+    # start from left, so lshift to the pos
+    pos_mask = 1 << (32 - pos_in_block - 1)
+
+    result = subprocess.run(['fc-list', '-v'], stdout=subprocess.PIPE)
+    if result.returncode != 0:
+        raise RuntimeError(
+            'run fc-list failed, please check your environment\n'
+        )
+
+    descriptions = result.stdout.decode('utf-8').split('\n')
+
+    last_font = ''
+    for line in descriptions:
+        if 'family:' in line:
+            last_font = line
+        elif (codepoint_base_str + ':') in line:
+            charset = line[line.rfind(':')+2:]
+            blocks = [int(x,16) for x in charset.split(' ')]
+            number = blocks[block_index]
+            supported = number & pos_mask
+
+            if supported:
+                font_name = iter(collections.deque(
+                    map(
+                        lambda x: x.group(1), 
+                        re.finditer(r'"([^"]+)"', last_font)
+                    ),
+                    maxlen=1
+                ))
+                yield from font_name
+
+def __main():
+    args = __parser_arg()
+
+    if len(args.char) == 0:
+        args.char = input('Input one character: ')
+    if len(args.char) != 1:
+        sys.stderr.write('Please provide ONE character')
+        exit(1)
+
+    cp = __get_char_codepoint(args.char)
+    codepoint = cp['decimal']
+    codepoint_hex_str = cp['hex']
+    codepoint_utf8_seq = cp['utf8']
+
+    print(
+        f'Font(s) support the char [ {args.char} ]' +
+        f'({codepoint}, U+{codepoint_hex_str}, {codepoint_utf8_seq}):'
+    )
+
+    fonts = collections.Counter(available_font_for_codepoint(codepoint))
+    typefaces = sorted(fonts)
+    max_width = max(map(wcwidth.wcswidth, typefaces))
+
+    for typeface in typefaces:
+        style_amount = fonts[typeface]
+        print(
+            typeface, ' ' * (max_width - wcwidth.wcswidth(typeface)),
+            f' with {style_amount} style{"s" if style_amount > 1 else ""}',
+            sep=''
+        )
+
+if __name__ == '__main__':
+    __main()
