@@ -136,7 +136,7 @@ def available_font_for_codepoint(codepoint):
                 font_name = iter(collections.deque(
                     map(
                         lambda x: x.group(1), 
-                        re.finditer(r'"([^"]+)"', last_font)
+                        re.finditer(r'".?([^"]+)"', last_font)
                     ),
                     maxlen=1
                 ))
@@ -156,14 +156,20 @@ def __main():
     codepoint_hex_str = cp['hex']
     codepoint_utf8_seq = cp['utf8']
 
+    font_list = list(available_font_for_codepoint(codepoint))
+
+    if len(font_list) == 0:
+        print("No fonts support this character")
+        exit(0)
+
+    fonts = collections.Counter(font_list)
+    typefaces = sorted(fonts)
+    max_width = max(map(wcwidth.wcswidth, typefaces))
+
     print(
         f'Font(s) support the char [ {args.char} ]' +
         f'({codepoint}, U+{codepoint_hex_str}, {codepoint_utf8_seq}):'
     )
-
-    fonts = collections.Counter(available_font_for_codepoint(codepoint))
-    typefaces = sorted(fonts)
-    max_width = max(map(wcwidth.wcswidth, typefaces))
 
     font_previews = []
 
