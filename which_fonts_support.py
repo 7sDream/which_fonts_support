@@ -61,9 +61,7 @@ __HTML_TEMPLATE__ = r'''
     </style>
 </head>
 <body>
-    <p>
-        {font_previews}
-    </p>
+    {font_previews}
 </body>
 </html>
 '''
@@ -117,8 +115,8 @@ def available_font_for_codepoint(codepoint):
     block_index = codepoint_tail >> 5
     # get last five bit because each block has 32 char
     pos_in_block = codepoint_tail & 0b11111
-    # start from left, so lshift to the pos
-    pos_mask = 1 << (32 - pos_in_block - 1)
+    # start from right, so lshift to the pos
+    pos_mask = 1 << pos_in_block
 
     result = subprocess.run(['fc-list', '-v'], stdout=subprocess.PIPE)
     if result.returncode != 0:
