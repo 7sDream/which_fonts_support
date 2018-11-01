@@ -26,7 +26,7 @@ import sys, re, subprocess, binascii, collections, argparse, tempfile
 
 import wcwidth
 
-__version__ = '1.1.0'
+__version__ = '1.1.1'
 
 __all__ = ['available_font_for_codepoint']
 
