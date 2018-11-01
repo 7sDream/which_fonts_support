@@ -75,13 +75,19 @@ __PREVIEW_BLOCK_TEMPLATE__ = r'''
 </div>
 '''
 
+__RE_GET_NAME__ = re.compile(r'"\.?([^"]+)"')
+
 def __parser_arg():
     parser = argparse.ArgumentParser(
         description='Find which fonts support specified character',
         epilog='Github: https://github.com/7sDream/which_fonts_support',
     )
     parser.add_argument('char', default='')
-    parser.add_argument('-v', '--version', action='version', version=__version__)
+    parser.add_argument('--version', action='version', version=__version__)
+    parser.add_argument(
+        '-v', '--verbose', action='store_true',
+        help='show each style full name',
+    )
     parser.add_argument(
         '-p', '--preview', action='store_true',
         help='show font preview for the char in browser',
@@ -107,7 +113,7 @@ def available_font_for_codepoint(codepoint):
     codepoint_tail = codepoint & 0xFF
     codepoint_base_str = hex(codepoint_base)[2:].rjust(4, '0')
 
-    # fc-list format is each line 8 block, 3 bit, so rshift 5 bit to get the index
+    # fc-list format is each line 8 block, 3 bit, so rshift 5 bit to get index
     block_index = codepoint_tail >> 5
     # get last five bit because each block has 32 char
     pos_in_block = codepoint_tail & 0b11111
@@ -122,10 +128,12 @@ def available_font_for_codepoint(codepoint):
 
     descriptions = result.stdout.decode('utf-8').split('\n')
 
-    last_font = ''
+    last_font_fullname = last_font_family = ''
     for line in descriptions:
         if 'family:' in line:
-            last_font = line
+            last_font_family = line
+        elif 'fullname:' in line:
+            last_font_fullname = line
         elif (codepoint_base_str + ':') in line:
             charset = line[line.rfind(':')+2:]
             blocks = [int(x,16) for x in charset.split(' ')]
@@ -133,14 +141,9 @@ def available_font_for_codepoint(codepoint):
             supported = number & pos_mask
 
             if supported:
-                font_name = iter(collections.deque(
-                    map(
-                        lambda x: x.group(1), 
-                        re.finditer(r'".?([^"]+)"', last_font)
-                    ),
-                    maxlen=1
-                ))
-                yield from font_name
+                font_name = __RE_GET_NAME__.search(last_font_family).group(1)
+                full_name = __RE_GET_NAME__.search(last_font_fullname).group(1)
+                yield font_name, full_name
 
 def __main():
     args = __parser_arg()
@@ -156,15 +159,22 @@ def __main():
     codepoint_hex_str = cp['hex']
     codepoint_utf8_seq = cp['utf8']
 
-    font_list = list(available_font_for_codepoint(codepoint))
+    font_full_to_name_map = {
+        full: name for name, full in available_font_for_codepoint(codepoint)
+    }
 
-    if len(font_list) == 0:
+    font_name_to_full_list_map = collections.defaultdict(list)
+    for full, name in font_full_to_name_map.items():
+        font_name_to_full_list_map[name].append(full)
+
+    if len(font_full_to_name_map) == 0:
         print("No fonts support this character")
         exit(0)
 
-    fonts = collections.Counter(font_list)
+    fonts = collections.Counter(font_full_to_name_map.values())
     typefaces = sorted(fonts)
-    max_width = max(map(wcwidth.wcswidth, typefaces))
+
+    max_width = max(map(wcwidth.wcswidth, typefaces)) if not args.verbose else 0
 
     print(
         f'Font(s) support the char [ {args.char} ]' +
@@ -176,10 +186,16 @@ def __main():
     for typeface in typefaces:
         style_amount = fonts[typeface]
         print(
-            typeface, ' ' * (max_width - wcwidth.wcswidth(typeface)),
-            f' with {style_amount} style{"s" if style_amount > 1 else ""}',
+            typeface, 
+            ' ' * (max_width - wcwidth.wcswidth(typeface)) \
+                if not args.verbose else '',
+            f' with {style_amount} style{"s" if style_amount > 1 else ""}' \
+                if not args.verbose else '',
             sep=''
         )
+        if style_amount > 1 and args.verbose:
+            for fullname in sorted(font_name_to_full_list_map[typeface]):
+                print(' ' * 4, fullname, sep='')
         font_previews.append(__PREVIEW_BLOCK_TEMPLATE__.format(
             font_name=typeface,
             char=args.char,
