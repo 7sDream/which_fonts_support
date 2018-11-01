@@ -72,7 +72,7 @@ This [screenshot][screen-shot-verbose] is a little big, please click to see it.
 
 ![][screen-shot-preview]
 
-前端苦手，这已经是我能做到最好的样子了，如果有老哥愿意帮忙美化一下，感激不尽。
+前端苦手，这已经是我能做到最好的样子了，如果有老哥愿意帮忙美化一下，感激不尽。
 
 I'm poor in design and HTML works, this is already my most successful try. If anyone willing to help me turn it to a elegant page, I would be grateful.  
 
