@@ -19,7 +19,11 @@ pip3 install which-fonts-support
 which_fonts_support <单个字符>
 ```
 
+添加 `-v` 参数可以显示字体的所有样式。
+
 添加 `-p` 参数可以在浏览器里预览这些字体的显示效果。
+
+见后文截图。
 
 ### 依赖：
 
@@ -54,7 +58,23 @@ Add `-p` to show display preview of those font in browser.
 
 ## 截图 / Screenshot
 
+### 普通使用 / Normal usage
+
 ![][screen-shot-normal]
+
+### 显示所有样式 / Show all styles
+
+此[截图][screen-shot-verbose]较长，请点击查看。
+
+This [screenshot][screen-shot-verbose] is a little big, please click to see it.
+
+### 预览 / Preview
+
+![][screen-shot-preview]
+
+前端苦手，这已经是我能做到最好的样子了，如果有老哥愿意帮忙美化一下，感激不尽。
+
+I'm poor in design and HTML works, this is already my most successful try. If anyone willing to help me turn it to a elegant page, I would be grateful.  
 
 ## TODO
 
@@ -67,4 +87,6 @@ Add `-p` to show display preview of those font in browser.
 
 MIT.
 
-[screen-shot-normal]: https://i.loli.net/2018/11/01/5bda081e2b840.jpg
+[screen-shot-normal]: https://i.loli.net/2018/11/01/5bdb06aa01fb8.jpg
+[screen-shot-verbose]: https://i.loli.net/2018/11/01/5bdb06ab906fc.jpg
+[screen-shot-preview]: https://i.loli.net/2018/11/01/5bdb06aab5f1e.jpg
