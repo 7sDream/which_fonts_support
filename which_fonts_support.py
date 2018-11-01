@@ -22,22 +22,66 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import sys, re, subprocess, binascii, collections, argparse
+import sys, re, subprocess, binascii, collections, argparse, tempfile
 
 import wcwidth
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 
 __all__ = ['available_font_for_codepoint']
+
+__STYLE__ = r'''
+div {
+    display: inline-block;
+    text-align: center;
+    padding-left: 1em;
+    padding-right: 1em;
+    margin-top: 1em;
+    border: 2px solid black;
+}
+p.preview {
+    font-size: 5em;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+'''
+
+__HTML_TEMPLATE__ = r'''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Font preview</title>
+    <style>
+        {style}
+    </style>
+</head>
+<body>
+    <p>
+        {font_previews}
+    </p>
+</body>
+</html>
+'''
+
+__PREVIEW_BLOCK_TEMPLATE__ = r'''
+<div>
+    <p class="preview" style="font-family: '{font_name}'">{char}</p>
+    <p class="fontName">{font_name}</p>
+</div>
+'''
 
 def __parser_arg():
     parser = argparse.ArgumentParser(
         description='Find which fonts support specified character',
-        epilog='Author: 7sDream <7seconddream@gmail.com>\n' +
-        'Github: https://github.com/7sDream/which_fonts_support\n',
+        epilog='Github: https://github.com/7sDream/which_fonts_support',
     )
     parser.add_argument('char', default='')
-    parser.add_argument('--version', action='version', version=__version__)
+    parser.add_argument('-v', '--version', action='version', version=__version__)
     parser.add_argument(
         '-p', '--preview', action='store_true',
         help='show font preview for the char in browser',
@@ -121,6 +165,8 @@ def __main():
     typefaces = sorted(fonts)
     max_width = max(map(wcwidth.wcswidth, typefaces))
 
+    font_previews = []
+
     for typeface in typefaces:
         style_amount = fonts[typeface]
         print(
@@ -128,6 +174,19 @@ def __main():
             f' with {style_amount} style{"s" if style_amount > 1 else ""}',
             sep=''
         )
+        font_previews.append(__PREVIEW_BLOCK_TEMPLATE__.format(
+            font_name=typeface,
+            char=args.char,
+        ))
+    
+    if args.preview:
+        html = __HTML_TEMPLATE__.format(
+            style=__STYLE__,
+            font_previews='\n'.join(font_previews),
+        )
+        f = tempfile.NamedTemporaryFile(suffix='.html', delete=False)
+        f.write(html.encode('utf-8'))
+        subprocess.Popen(['open', f.name])
 
 if __name__ == '__main__':
     __main()

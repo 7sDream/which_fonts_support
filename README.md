@@ -19,6 +19,8 @@ pip3 install which-fonts-support
 which_fonts_support <单个字符>
 ```
 
+添加 `-p` 参数可以在浏览器里预览这些字体的显示效果。
+
 ### 依赖：
 
 * fontconfig
@@ -42,6 +44,8 @@ pip3 install which-fonts-support
 which_fonts_support <the-char>
 ```
 
+Add `-p` to show display preview of those font in browser.
+
 ### Dependencies
 
 * fontconfig
@@ -51,6 +55,13 @@ which_fonts_support <the-char>
 ## 截图 / Screenshot
 
 ![][screen-shot-normal]
+
+## TODO
+
+- [x] generate HTML page for preview fonts
+- [ ] Documents
+- [ ] Add words on pypi page
+- [ ] Article about how to read the charset section of `fc-list` command
 
 ## LICENSE
 
