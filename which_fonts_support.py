@@ -74,13 +74,18 @@ __PREVIEW_BLOCK_TEMPLATE__ = r'''
 '''
 
 __RE_GET_NAME__ = re.compile(r'"\.?([^"]+)"')
+__RE_UNICODE_HEX__ = re.compile(r'^U\+[0-9a-fA-F]{4,6}$')
 
 def __parser_arg():
     parser = argparse.ArgumentParser(
         description='Find which fonts support specified character',
         epilog='Github: https://github.com/7sDream/which_fonts_support',
     )
-    parser.add_argument('char', default='')
+    parser.add_argument(
+        'char', default='', 
+        help='the character, if you want to check character not in BMP, ' + 
+            'use U+XXXX format.'
+    )
     parser.add_argument('--version', action='version', version=__version__)
     parser.add_argument(
         '-v', '--verbose', action='store_true',
@@ -93,15 +98,15 @@ def __parser_arg():
 
     return parser.parse_args()
 
-def __get_char_codepoint(char):
-    assert len(char) == 1
+def __get_char_codepoint(c):
+    assert len(c) == 1
 
-    codepoint = ord(char)
+    codepoint = ord(c)
 
     return {
         'decimal': codepoint, 
         'hex': hex(codepoint)[2:].rjust(6, '0'), 
-        'utf8': binascii.hexlify(char.encode('utf8')).decode("ascii"),
+        'utf8': binascii.hexlify(c.encode('utf8')).decode("ascii"),
     }
 
 def available_font_for_codepoint(codepoint):
@@ -145,6 +150,9 @@ def available_font_for_codepoint(codepoint):
 
 def __main():
     args = __parser_arg()
+
+    if __RE_UNICODE_HEX__.match(args.char):
+        args.char = chr(int(args.char[2:], 16))
 
     if len(args.char) == 0:
         args.char = input('Input one character: ')
