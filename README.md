@@ -19,6 +19,8 @@ pip3 install which-fonts-support
 which_fonts_support <单个字符>
 ```
 
+如果希望检测非 BMP 平面字符，请使用 `U+XXXX` 或者 `U+XXXXXX` 格式。
+
 添加 `-v` 参数可以显示字体的所有样式。
 
 添加 `-p` 参数可以在浏览器里预览这些字体的显示效果。
@@ -47,6 +49,10 @@ So I write this to help me find available fallback font in my system.
 pip3 install which-fonts-support
 which_fonts_support <the-char>
 ```
+
+Use `U+XXXX` or `U+XXXXXX` format for non BMP character.
+
+Add `-v` to show all style of those fonts.
 
 Add `-p` to show display preview of those font in browser.
 
