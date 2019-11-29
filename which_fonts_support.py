@@ -129,7 +129,7 @@ def available_font_for_codepoint(codepoint):
             'run fc-list failed, please check your environment\n'
         )
 
-    descriptions = result.stdout.decode('utf-8').split('\n')
+    descriptions = result.stdout.decode('utf-8', 'replace').split('\n')
 
     last_font_fullname = last_font_family = ''
     for line in descriptions:
