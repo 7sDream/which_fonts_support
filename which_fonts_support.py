@@ -22,7 +22,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import sys, re, subprocess, binascii, collections, argparse, tempfile, webbrowser
+import sys, re, os, subprocess, binascii, collections, argparse, tempfile, time, webbrowser
 
 import wcwidth
 
@@ -216,6 +216,8 @@ def __main():
         f.write(html.encode('utf-8'))
         f.close()
         webbrowser.open(f.name)
+        time.sleep(5)  # Give the browser time to open the page
+        os.remove(f.name)
 
 if __name__ == '__main__':
     __main()
