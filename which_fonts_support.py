@@ -22,7 +22,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import sys, re, subprocess, binascii, collections, argparse, tempfile
+import sys, re, subprocess, binascii, collections, argparse, tempfile, webbrowser
 
 import wcwidth
 
@@ -214,7 +214,8 @@ def __main():
         )
         f = tempfile.NamedTemporaryFile(suffix='.html', delete=False)
         f.write(html.encode('utf-8'))
-        subprocess.Popen(['open', f.name])
+        f.close()
+        webbrowser.open(f.name)
 
 if __name__ == '__main__':
     __main()
