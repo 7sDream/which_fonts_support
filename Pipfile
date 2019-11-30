@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-wcwidth = "*"
+wcwidth = "~=0.1.7"
 
 [dev-packages]
 twine = "*"

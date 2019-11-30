@@ -25,13 +25,15 @@ which_fonts_support <单个字符>
 
 添加 `-p` 参数可以在浏览器里预览这些字体的显示效果。
 
+使用 `-f path` 参数可以自定义 `fc-list` 可执行文件的安装位置。
+
 见后文截图。
 
 ### 依赖：
 
-* fontconfig
+* 已安装 `fontconfig`
 * python >= 3.5
-* wcwidth
+* wcwidth >= 0.1.7
 
 ## Introduction
 
@@ -56,9 +58,11 @@ Add `-v` to show all style of those fonts.
 
 Add `-p` to show display preview of those font in browser.
 
+Use `-f <path>` to use your `fc-list` installed in a custom path.
+
 ### Dependencies
 
-* fontconfig
+* `fontconfig` installed in your system
 * python >= 3.5
 * wcwidth
 
@@ -85,6 +89,8 @@ I'm poor in design and HTML works, this is already my most successful try. If an
 ## TODO
 
 - [x] generate HTML page for preview fonts
+- [x] Make this a module
+- [x] Use an internal http server to preview, not temp file
 - [ ] Documents
 - [ ] Add words on pypi page
 - [ ] Article about how to read the charset section of `fc-list` command
