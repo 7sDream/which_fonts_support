@@ -22,7 +22,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import sys, re, subprocess, binascii, collections, argparse, tempfile
+import sys, re, os, subprocess, binascii, collections, argparse, tempfile, time, webbrowser
 
 import wcwidth
 
@@ -129,7 +129,7 @@ def available_font_for_codepoint(codepoint):
             'run fc-list failed, please check your environment\n'
         )
 
-    descriptions = result.stdout.decode('utf-8').split('\n')
+    descriptions = result.stdout.decode('utf-8', 'replace').split('\n')
 
     last_font_fullname = last_font_family = ''
     for line in descriptions:
@@ -214,7 +214,10 @@ def __main():
         )
         f = tempfile.NamedTemporaryFile(suffix='.html', delete=False)
         f.write(html.encode('utf-8'))
-        subprocess.Popen(['open', f.name])
+        f.close()
+        webbrowser.open(f.name)
+        time.sleep(5)  # Give the browser time to open the page
+        os.remove(f.name)
 
 if __name__ == '__main__':
     __main()
