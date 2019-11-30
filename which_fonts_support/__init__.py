@@ -24,6 +24,6 @@
 
 from .main import available_fonts_for_codepoint
 
-__version__ = '2.0.0'
+__version__ = '2.1.0'
 
 __all__ = ['available_fonts_for_codepoint']
