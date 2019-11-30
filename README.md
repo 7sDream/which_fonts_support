@@ -99,6 +99,6 @@ I'm poor in design and HTML works, this is already my most successful try. If an
 
 MIT.
 
-[screen-shot-normal]: https://i.loli.net/2018/11/01/5bdb06aa01fb8.jpg
-[screen-shot-verbose]: https://i.loli.net/2018/11/01/5bdb06ab906fc.jpg
-[screen-shot-preview]: https://i.loli.net/2018/11/01/5bdb06aab5f1e.jpg
+[screen-shot-normal]: https://rikka.7sdre.am/files/a3ba7846-4d13-4719-aa31-08121d549099.png
+[screen-shot-verbose]: https://rikka.7sdre.am/files/3b46d5ed-54f0-414f-b19b-26c5468d2225.png
+[screen-shot-preview]: https://rikka.7sdre.am/files/5b180f2f-6255-4330-958c-472a1520e3ad.png
