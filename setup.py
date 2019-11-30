@@ -19,7 +19,7 @@ setup(
         'wcwidth'
     ],
     entry_points={
-        'console_scripts': ['which_fonts_support=which_fonts_support:cli']
+        'console_scripts': ['which_fonts_support=which_fonts_support.cli:cli']
     },
     classifiers=[
         'Development Status :: 3 - Alpha',

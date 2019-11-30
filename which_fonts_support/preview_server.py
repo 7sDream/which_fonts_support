@@ -1,6 +1,7 @@
 import functools
 import threading
-from http.server import HTTPStatus, ThreadingHTTPServer, BaseHTTPRequestHandler
+from http import HTTPStatus
+from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 
 
 __STYLE__ = r'''
@@ -46,6 +47,7 @@ __PREVIEW_BLOCK_TEMPLATE__ = r'''
 </div>
 '''
 
+
 class FontPreviewRequestHandler(BaseHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
 
@@ -53,6 +55,7 @@ class FontPreviewRequestHandler(BaseHTTPRequestHandler):
         self._preview_html_content = preview_html_content.encode('utf8')
         super().__init__(*args, **kwargs)
 
+    # noinspection PyPep8Naming
     def do_GET(self):
         if self.path != '/':
             return
@@ -65,6 +68,7 @@ class FontPreviewRequestHandler(BaseHTTPRequestHandler):
 
     def log_request(self, code='-', size='-'):
         pass
+
 
 class FontPreviewServer:
     def __init__(self, char):
@@ -80,8 +84,8 @@ class FontPreviewServer:
         font_previews = []
         for family in self._families:
             font_previews.append(__PREVIEW_BLOCK_TEMPLATE__.format(
-                family = family,
-                char = self._char
+                family=family,
+                char=self._char
             ))
         html = __HTML_TEMPLATE__.format(
             style=__STYLE__,

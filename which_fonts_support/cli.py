@@ -122,3 +122,7 @@ def cli():
         input("Press Enter when you finish preview...")
 
         font_preview_server.stop()
+
+
+if __name__ == '__main__':
+    cli()

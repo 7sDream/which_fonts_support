@@ -22,12 +22,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from .cli import cli
 from .main import available_fonts_for_codepoint
 
 __version__ = '2.0.0'
 
-__all__ = ['available_fonts_for_codepoint', '__version__']
-
-if __name__ == '__main__':
-    cli()
+__all__ = ['available_fonts_for_codepoint']
