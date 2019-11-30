@@ -51,8 +51,6 @@ python3 -m which_fonts_support.cli <单个字符>
 
 此[截图][screen-shot-verbose]较长，请点击查看。
 
-This [screenshot][screen-shot-verbose] is a little big, please click to see it.
-
 ### 预览
 
 ![][screen-shot-preview]
