@@ -5,20 +5,76 @@ from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 
 
 __STYLE__ = r'''
-div {
-    display: inline-block;
-    text-align: center;
-    padding-left: 1em;
-    padding-right: 1em;
-    margin-top: 1em;
-    border: 2px solid black;
+a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,
+dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,
+kbd,label,legend,li,mark,menu,nav,object,ol,output,p,pre,q,ruby,s,samp,section,small,span,strike,strong,sub,summary,
+sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{
+    margin:0;
+    padding:0;
+    border:0;
+    font-size:100%;
+    font:inherit;
+    vertical-align:baseline
 }
-p.preview {
-    font-size: 5em;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-bottom: 0;
-    padding-top: 0;
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{
+    display:block
+}
+body{
+    font-size:1.5em;
+    line-height:2rem;
+    font-weight:400;
+    font-family:"Helvetica Neue",HelveticaNeue,Helvetica,Arial,sans-serif;
+    color:#222;
+    height:100%;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale
+}
+ol,ul{
+    list-style:none
+}
+blockquote,q{
+    quotes:none
+}
+blockquote:after,blockquote:before,q:after,q:before{
+    content:'';
+    content:none
+}
+table{
+    border-collapse:collapse;
+    border-spacing:0
+}
+.container{
+    position:relative;
+    font-size:32px;
+    min-height:100vh;
+    width:100%;
+    height:100%;
+    padding:1rem;
+    display:flex;
+    background-color:#e1e1e1;
+    flex-flow:row wrap;
+    text-align:center;
+    box-sizing:border-box
+}
+.container .item{
+    position:relative;
+    display:inline-block;
+    flex:1 1 auto;
+    padding:1rem;
+    margin:1rem;
+    text-align:center;
+    background-color:#fafafa;
+    border:3px solid transparent
+}
+.container .item .preview{
+    padding:1.5rem 6.5rem;
+    line-height:1.4em;
+    font-size:2.827em
+}
+.container .item .fontName{
+    font-size:.85rem;
+    color:#bfbfbf;
+    letter-spacing:.5px
 }
 '''
 
@@ -35,13 +91,15 @@ __HTML_TEMPLATE__ = r'''
     </style>
 </head>
 <body>
-    {font_previews}
+    <div class="container">
+        {font_previews}
+    </div>
 </body>
 </html>
 '''
 
 __PREVIEW_BLOCK_TEMPLATE__ = r'''
-<div>
+<div class="item">
     <p class="preview" style="font-family: '{family}'">{char}</p>
     <p class="fontName">{family}</p>
 </div>
