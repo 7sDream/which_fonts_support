@@ -55,7 +55,7 @@ python3 -m which_fonts_support.cli <单个字符>
 
 ![][screen-shot-preview]
 
-前端苦手，这已经是我能做到最好的样子了，如果有老哥愿意帮忙美化一下，感激不尽。
+我前端苦手，这个预览页面是由 [@MashiroWang][MashiroWang-github] 设计和实现的，感激不尽。
 
 ## TODO
 
@@ -72,4 +72,5 @@ MIT.
 
 [screen-shot-normal]: https://rikka.7sdre.am/files/a3ba7846-4d13-4719-aa31-08121d549099.png
 [screen-shot-verbose]: https://rikka.7sdre.am/files/3b46d5ed-54f0-414f-b19b-26c5468d2225.png
-[screen-shot-preview]: https://rikka.7sdre.am/files/5b180f2f-6255-4330-958c-472a1520e3ad.png
+[screen-shot-preview]: https://rikka.7sdre.am/files/2b7d5421-3e6b-4a65-a36c-73b8436d962d.png
+[MashiroWang-github]: https://github.com/MashiroWang

@@ -55,7 +55,7 @@ This [screenshot][screen-shot-verbose] is a little big, please click to see it.
 
 ![][screen-shot-preview]
 
-I'm poor in design and HTML works, this is already my most successful try. If anyone willing to help me turn it to a elegant page, I would be grateful.  
+I'm poor in design and HTML works, this preview is designed and implemented by [@MashiroWang][MashiroWang-github], thanks!
 
 ## TODO
 
@@ -73,4 +73,5 @@ MIT.
 [chinese-readme]: https://github.com/7sDream/which_fonts_support/blob/master/README.zh.md
 [screen-shot-normal]: https://rikka.7sdre.am/files/a3ba7846-4d13-4719-aa31-08121d549099.png
 [screen-shot-verbose]: https://rikka.7sdre.am/files/3b46d5ed-54f0-414f-b19b-26c5468d2225.png
-[screen-shot-preview]: https://rikka.7sdre.am/files/5b180f2f-6255-4330-958c-472a1520e3ad.png
+[screen-shot-preview]: https://rikka.7sdre.am/files/2b7d5421-3e6b-4a65-a36c-73b8436d962d.png
+[MashiroWang-github]: https://github.com/MashiroWang
