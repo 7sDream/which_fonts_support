@@ -15,10 +15,10 @@ ul, var, video {
     border: 0;
     font-size: 100%;
     font: inherit;
-    vertical-align: baseline
+    vertical-align: baseline;
 }
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
-    display: block
+    display: block;
 }
 body {
     font-size: 1.5em;
@@ -28,21 +28,21 @@ body {
     color: #222;
     height: 100%;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale
+    -moz-osx-font-smoothing: grayscale;
 }
 ol, ul {
-    list-style: none
+    list-style: none;
 }
 blockquote, q {
-    quotes: none
+    quotes: none;
 }
-blockquote: after, blockquote: before, q: after, q: before {
+blockquote:after, blockquote:before, q:after, q:before {
     content: '';
-    content: none
+    content: none;
 }
 table {
     border-collapse: collapse;
-    border-spacing: 0
+    border-spacing: 0;
 }
 .container {
     position: relative;
@@ -55,7 +55,7 @@ table {
     background-color: #e1e1e1;
     flex-flow: row wrap;
     text-align: center;
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 .container .item {
     position: relative;
@@ -65,17 +65,17 @@ table {
     margin: 1rem;
     text-align: center;
     background-color: #fafafa;
-    border: 3px solid transparent
+    border: 3px solid transparent;
 }
 .container .item .preview {
     padding: 1.5rem 6.5rem;
     line-height: 1.4em;
-    font-size: 2.827em
+    font-size: 2.827em;
 }
 .container .item .fontName {
     font-size: .85rem;
     color: #bfbfbf;
-    letter-spacing: .5px
+    letter-spacing: .5px;
 }
 '''
 
